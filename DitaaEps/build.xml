@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Simple build file. -->
+<project basedir="." default="jar" name="DitaaEps">
+  <target name="compile" description="Compile project">
+    <mkdir dir="build/classes"/>
+    <javac srcdir="src" 
+	   destdir="build/classes"
+	   source="1.4"
+	   target="1.4">
+      <classpath>
+	<fileset dir="../lib" includes="*.jar"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile" description="Generate jar-file">
+    <mkdir dir="dist"/>
+    <jar jarfile="dist/${ant.project.name}.jar">
+      <fileset dir="build/classes"/>
+      <manifest>
+	<attribute name="Main-Class" value="se.ngm.ditaaeps.EpsRenderer"/>
+	<attribute name="Class-Path" value="ditaa0_6b.jar"/>
+      </manifest>
+    </jar>
+  </target>
+  
+  <target name="dist" depends="jar" description="Generate distribution">
+    <copy todir="dist">
+      <fileset dir="../lib" includes="*.jar"/>
+      <fileset dir="docs" includes="docs"/>
+    </copy>
+  </target>
+
+  <target name="dist-zip" depends="dist" description="Generate zip distribution">
+    <delete file="${ant.project.name}.zip"/><!-- Make sure zip file is rebuilt -->
+    <zip destfile="${ant.project.name}.zip" update="true" duplicate="preserve">
+      <zipfileset dir="dist" prefix="${ant.project.name}"/>
+    </zip>
+  </target>
+
+  <target name="clean" description="Clean">
+    <delete dir="build"/>
+    <delete dir="dist"/>
+  </target>
+</project>

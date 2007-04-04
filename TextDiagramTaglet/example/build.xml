@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Simple build file. -->
+<project basedir="." default="javadoc" name="HelloWorld">
+  <target name="taglet">
+    <ant dir=".." target="dist"/>
+  </target>
+
+  <target name="javadoc" depends="taglet" description="Generate javadoc">
+    <mkdir dir="javadoc"/>
+    <javadoc destdir="javadoc">
+      <taglet name="se.ngm.javadoc.TextDiagramTaglet" path="../dist/TextDiagramTaglet.jar"/>
+      <sourcepath>
+	<pathelement location="src"/>
+      </sourcepath>
+      <fileset dir="src"/>
+    </javadoc>
+  </target>
+
+  <target name="clean" description="Clean">
+    <delete dir="javadoc"/>
+  </target>
+</project>
