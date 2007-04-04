@@ -12,10 +12,10 @@ package helloworld;
  */
 public class HelloWorld {
     public static void main(String[] args) {
-	if(args.length == 0) {
-	    System.out.println("Hello stranger!");
-	} else {
-	    Syste.out.println("Hello "+args[1]+"!");
-	}
+        if(args.length == 0) {
+            System.out.println("Hello stranger!");
+        } else {
+            System.out.println("Hello "+args[1]+"!");
+        }
     }
 }
