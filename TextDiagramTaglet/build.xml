@@ -27,7 +27,7 @@
   <target name="dist" depends="jar" description="Generate distribution">
     <copy todir="dist">
       <fileset dir="../lib" includes="*.jar"/>
-      <fileset dir="docs" includes="docs"/>
+      <fileset dir="docs"/>
     </copy>
   </target>
 
