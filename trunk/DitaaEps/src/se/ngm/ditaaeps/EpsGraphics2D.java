@@ -196,7 +196,35 @@ public class EpsGraphics2D extends Graphics2D {
         float[] pt = new float[]{x, y};
         transform.transform(pt, 0, pt, 0, 1);
         out.println(""+pt[0]+" "+pt[1]+" moveto");
-        out.println("("+s+") show"); // TODO: escape string
+        out.println("("+escape(s)+") show");
+    }
+    
+    private static String escape(String s) {
+        StringBuilder sb = new StringBuilder(s.length()+8);
+        for(int i=0; i<s.length(); i++) {
+            char ch = s.charAt(i);
+            switch(ch) {
+            case '(':
+                sb.append("\\(");
+                break;
+            case ')':
+                sb.append("\\)");
+                break;
+            case '\\':
+                sb.append("\\\\");
+                break;
+            default:
+                if(ch > 128) {
+                    sb.append('\\');
+                    for(int j=3; j>0; j--) {
+                        sb.append((char)((ch >> 8*j) & 0x7 + '0'));
+                    }
+                } else {
+                    sb.append(ch);
+                }
+            }
+        }
+        return sb.toString();
     }
 
     public void setStroke(Stroke s) {
